@@ -1,16 +1,17 @@
 [tool.poetry]
-name = "prevwind"
+name = "windforecast"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Ettore Aquino<ettore@ettoreaquino.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 pandas = "^1.2.5"
 tensorflow = "^2.5.0"
+matplotlib = "^3.4.2"
+plotly = "^5.1.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
 jupyterlab = "^3.0.16"
 
 [build-system]
