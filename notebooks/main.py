@@ -62,7 +62,9 @@ class WindForecaster:
 
         return train, test
     
-    def __createTimeWindows(self, dataset, prediction_window: int, forecast_delay: int) -> (np.array, np.array):
+    def __createTimeWindows(self,dataset, prediction_window: int, forecast_delay: int) -> (np.array, np.array):
+        """Creates time windows, which could be used for prediction or testing
+        """
         X, Y = [], []
         for i in range(0, dataset.shape[0] - prediction_window - 1):
             X.append(dataset[i:(i + prediction_window)])
@@ -90,8 +92,22 @@ class WindForecaster:
             metrics=[metrics],
             optimizer=optimizer)
 
+        print("Model is ready to be trained.")
         return model
     
+    def train(self, batch_size:int, epochs:int, verbose: str="auto", plot: bool=True):
+
+        training = self.model.fit(x=self.train_X, y=self.train_Y,batch_size=batch_size,epochs=epochs,verbose=verbose)
+
+        if plot:
+            hist_df = pd.DataFrame(training.history)
+            hist_df = hist_df.rename(columns={'root_mean_squared_error': 'RMSE'})
+            fig = px.line(hist_df['RMSE'], title="Error accros training",labels={"value": "Root Mean Squared value","index": "Epoch","variable": "Erro Metric"})
+            fig.show()
+            
+        return training
+    
     def __repr__(self):
+        
         self.model.summary()
         return ""
